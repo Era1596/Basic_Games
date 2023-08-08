@@ -1,0 +1,21 @@
+# Genel Ayarlar
+title: My GitHub Pages Site
+description: This is my GitHub Pages site.
+baseurl: ""
+url: "https://username.github.io/repo-name" # GitHub Pages URL'niz
+
+# Dönüştürücüler
+markdown: kramdown
+highlighter: rouge
+sass:
+  style: compressed # veya expanded, nested, compact
+
+# Tema
+theme: jekyll-theme-minimal
+
+# Ek Ayarlar
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
