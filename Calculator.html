@@ -34,6 +34,8 @@
         
         <p>Result:</p>
         <p id="result"></p>
+        
+        <button id="exitButton" onclick="exitCalculator()">Exit</button>
     </div>
     
     <script>
@@ -51,6 +53,10 @@
             } else if (operation === '/') {
                 result.innerHTML = num1 / num2;
             }
+        }
+
+        function exitCalculator() {
+            window.location.href = "index.html";
         }
     </script>
 </body>
