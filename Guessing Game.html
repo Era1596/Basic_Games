@@ -50,29 +50,15 @@
                 feedbackText = "Wrong. The answer was " + secretNumber;
             }
 
-            if (turn === 10) {
-                feedbackText += "<p>Your Final Score: " + score + "/10</p>";
-                feedbackText += "<button onclick='resetGame()'>Play Again</button>";
-            }
-
             feedback.innerHTML = "<p>Turn " + turn + " - " + feedbackText + " Score: " + score + "</p>";
             turn++;
         }
 
         function endGame() {
             var feedback = document.getElementById("output");
-            feedback.innerHTML = "<p>Game over. Your Final Score: " + score + "/10</p>";
-            feedback.innerHTML += "<button onclick='resetGame()'>Play Again</button>";
+            feedback.innerHTML = "<p>Game over. Your Final Score: " + score + "/" + (turn - 1) + "</p>";
+            feedback.innerHTML += "<button onclick='window.location.href=\"index.html\"'>Back to Home</button>";
             document.getElementById("guessInput").disabled = true;
-        }
-
-        function resetGame() {
-            score = 0;
-            turn = 1;
-            var feedback = document.getElementById("output");
-            feedback.innerHTML = "";
-            document.getElementById("guessInput").value = "";
-            document.getElementById("guessInput").disabled = false;
         }
     </script>
 </body>
