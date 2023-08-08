@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CALCULATOR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        #calculator {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <h1>CALCULATOR</h1>
+        
+        <label>First Number:</label>
+        <input type="text" id="num1"><br><br>
+        
+        <label>Second Number:</label>
+        <input type="text" id="num2"><br><br>
+        
+        <button onclick="calculate('+')">Addition</button>
+        <button onclick="calculate('-')">Subtraction</button>
+        <button onclick="calculate('*')">Multiplication</button>
+        <button onclick="calculate('/')">Division</button>
+        
+        <p>Result:</p>
+        <p id="result"></p>
+    </div>
+    
+    <script>
+        function calculate(operation) {
+            var num1 = parseFloat(document.getElementById("num1").value);
+            var num2 = parseFloat(document.getElementById("num2").value);
+            var result = document.getElementById("result");
+            
+            if (operation === '+') {
+                result.innerHTML = num1 + num2;
+            } else if (operation === '-') {
+                result.innerHTML = num1 - num2;
+            } else if (operation === '*') {
+                result.innerHTML = num1 * num2;
+            } else if (operation === '/') {
+                result.innerHTML = num1 / num2;
+            }
+        }
+    </script>
+</body>
+</html>
