@@ -40,7 +40,7 @@
             shuffledWord = selectedWord.split('').sort(function(){return 0.5-Math.random()}).join('');
             remainingAttempts = 3;
             var output = document.getElementById("output");
-            output.innerHTML = "<p>Welcome to the Word Guessing Game!<br>Can you guess the shuffled word? You have 3 attempts.</p>";
+            output.innerHTML = "<h3>Welcome to the Word Guessing Game!<br>Can you guess the shuffled word? You have 3 attempts.</h3>";
             document.getElementById("guessInput").style.display = "block";
             document.getElementById("makeGuessBtn").style.display = "block";
         }
@@ -50,15 +50,15 @@
             var output = document.getElementById("output");
             
             if (guess === selectedWord) {
-                output.innerHTML += "<p>Congratulations! You guessed the word correctly.</p>";
+                output.innerHTML += "<h3>Congratulations! You guessed the word correctly.</h3>";
                 document.getElementById("guessInput").style.display = "none";
                 document.getElementById("makeGuessBtn").style.display = "none";
             } else {
                 remainingAttempts--;
                 if (remainingAttempts > 0) {
-                    output.innerHTML += "<p>Wrong guess! You have " + remainingAttempts + " attempts remaining.</p>";
+                    output.innerHTML += "<h3>Wrong guess! You have " + remainingAttempts + " attempts remaining.</h3>";
                 } else {
-                    output.innerHTML += "<p>Sorry, you're out of attempts. The correct word was '" + selectedWord + "'.</p>";
+                    output.innerHTML += "<h3>Sorry, you're out of attempts. The correct word was '" + selectedWord + "'.</h3>";
                     document.getElementById("guessInput").style.display = "none";
                     document.getElementById("makeGuessBtn").style.display = "none";
                 }
