@@ -64,6 +64,7 @@
             var feedback = document.getElementById("output");
             feedback.innerHTML = "<p>Game over. Your Final Score: " + score + "/10</p>";
             feedback.innerHTML += "<button onclick='resetGame()'>Play Again</button>";
+            document.getElementById("guessInput").disabled = true;
         }
 
         function resetGame() {
@@ -72,6 +73,7 @@
             var feedback = document.getElementById("output");
             feedback.innerHTML = "";
             document.getElementById("guessInput").value = "";
+            document.getElementById("guessInput").disabled = false;
         }
     </script>
 </body>
