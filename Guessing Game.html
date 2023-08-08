@@ -26,10 +26,7 @@
         <button onclick="checkGuess()">Check</button>
         
         <p id="result"></p>
-        <p id="score"></p>
-        <p id="triesLeft"></p>
-        <p id="answer"></p>
-        <button id="continueButton" style="display: none;" onclick="continueOrFinish()">Finish</button>
+        <button id="continueButton" style="display: none;" onclick="continueOrFinish()">Continue</button>
     </div>
     
     <script>
@@ -43,49 +40,48 @@
             correctAnswer = Math.floor(Math.random() * 5) + 1;
             var userGuess = parseInt(document.getElementById("guess").value);
             var result = document.getElementById("result");
-            var answer = document.getElementById("answer");
             
             if (userGuess === correctAnswer) {
                 totalScore += triesLeft;
                 result.innerHTML = "Correct! You earned " + triesLeft + " points.";
             } else {
-                result.innerHTML = "Wrong! The answer was " + correctAnswer;
+                result.innerHTML = "Wrong! The answer was " + correctAnswer + ".";
             }
-            
-            answer.innerHTML = "Your answer: " + userGuess + ", Correct answer: " + correctAnswer;
             
             triesLeft--;
             
-            if (triesLeft === 0) {
-                document.getElementById("guess").setAttribute("readonly", "true");
-                document.getElementById("continueButton").style.display = "block";
-                document.getElementById("triesLeft").innerHTML = "No tries left. Click Finish to continue or restart.";
-            } else {
-                document.getElementById("triesLeft").innerHTML = triesLeft + " tries left.";
+            if (triesLeft <= 0) {
+                roundsPlayed++;
+                
+                if (roundsPlayed === 10) {
+                    document.getElementById("guess").setAttribute("readonly", "true");
+                    document.getElementById("continueButton").style.display = "block";
+                } else {
+                    resetGame();
+                }
             }
         }
         
         function continueOrFinish() {
-            roundsPlayed++;
+            var userChoice = confirm("Do you want to continue playing?");
             
-            if (roundsPlayed === 10) {
-                document.getElementById("score").innerHTML = "Total Score: " + totalScore;
-                document.getElementById("guess").setAttribute("readonly", "true");
-                document.getElementById("result").innerHTML = "";
-                document.getElementById("triesLeft").innerHTML = "";
-                document.getElementById("answer").innerHTML = "";
-                document.getElementById("continueButton").style.display = "none";
+            if (userChoice) {
+                resetGame();
+            } else {
                 alert("Game over. Your final score: " + totalScore);
+                window.location.href = "index.html";
                 totalScore = 0;
                 roundsPlayed = 0;
-            } else {
-                triesLeft = maxTries;
-                document.getElementById("guess").removeAttribute("readonly");
-                document.getElementById("result").innerHTML = "";
-                document.getElementById("triesLeft").innerHTML = triesLeft + " tries left.";
-                document.getElementById("answer").innerHTML = "";
-                document.getElementById("continueButton").style.display = "none";
+                resetGame();
             }
+        }
+        
+        function resetGame() {
+            triesLeft = maxTries;
+            document.getElementById("guess").removeAttribute("readonly");
+            document.getElementById("guess").value = "";
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("continueButton").style.display = "none";
         }
     </script>
 </body>
