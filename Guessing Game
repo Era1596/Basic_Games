@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        #game {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <h1>Guessing Game</h1>
+        <p>Guess a number between 1 and 5:</p>
+        
+        <input type="number" id="guess"><br><br>
+        <button onclick="checkGuess()">Check</button>
+        
+        <p id="result"></p>
+    </div>
+    
+    <script>
+        function checkGuess() {
+            var randomNumber = Math.floor(Math.random() * 5) + 1;
+            var userGuess = parseInt(document.getElementById("guess").value);
+            var result = document.getElementById("result");
+            
+            if (userGuess === randomNumber) {
+                result.innerHTML = "Correct! Press 1 to play again or 2 to quit.";
+            } else {
+                result.innerHTML = "Wrong! The answer was " + randomNumber + ". Press 1 to play again or 2 to quit.";
+            }
+        }
+    </script>
+</body>
+</html>
