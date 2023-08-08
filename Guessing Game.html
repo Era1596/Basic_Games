@@ -23,21 +23,59 @@
         <p>Guess a number between 1 and 5:</p>
         
         <input type="number" id="guess"><br><br>
-        <button onclick="checkGuess()">Check</button>
+        <button onclick="playGame()">Play</button>
         
         <p id="result"></p>
+        <p id="score"></p>
+        <button id="continueButton" style="display: none;" onclick="continueOrFinish()">Continue (1) or Finish (2)</button>
     </div>
     
     <script>
+        var maxTries = 10;
+        var triesLeft = maxTries;
+        var totalScore = 0;
+        
+        function playGame() {
+            triesLeft = maxTries;
+            totalScore = 0;
+            showGuessingForm();
+        }
+        
+        function showGuessingForm() {
+            var guessInput = document.getElementById("guess");
+            guessInput.removeAttribute("readonly");
+            guessInput.value = "";
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("score").innerHTML = "Score: " + totalScore;
+            document.getElementById("continueButton").style.display = "none";
+        }
+        
         function checkGuess() {
             var randomNumber = Math.floor(Math.random() * 5) + 1;
             var userGuess = parseInt(document.getElementById("guess").value);
             var result = document.getElementById("result");
             
             if (userGuess === randomNumber) {
-                result.innerHTML = "Correct! Press 1 to play again or 2 to quit.";
+                totalScore += triesLeft;
+                result.innerHTML = "Correct! You earned " + triesLeft + " points. Press Continue (1) or Finish (2).";
             } else {
-                result.innerHTML = "Wrong! The answer was " + randomNumber + ". Press 1 to play again or 2 to quit.";
+                result.innerHTML = "Wrong! The answer was " + randomNumber + ". Tries left: " + --triesLeft;
+            }
+            
+            if (triesLeft <= 0) {
+                document.getElementById("continueButton").style.display = "block";
+                document.getElementById("guess").setAttribute("readonly", "true");
+            }
+        }
+        
+        function continueOrFinish() {
+            var choice = parseInt(prompt("Press 1 to continue or 2 to finish."));
+            if (choice === 1) {
+                playGame();
+            } else if (choice === 2) {
+                alert("Game over. Your final score: " + totalScore);
+            } else {
+                alert("Invalid choice. Game over. Your final score: " + totalScore);
             }
         }
     </script>
