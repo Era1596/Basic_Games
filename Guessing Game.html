@@ -5,105 +5,55 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
         }
-        
-        #game {
-            width: 300px;
-            margin: 0 auto;
-            padding: 20px;
+
+        .container {
             border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            padding: 20px;
+            display: inline-block;
+            text-align: left;
         }
 
-        #button-container {
-            display: flex;
-            justify-content: space-between;
+        button {
             margin-top: 10px;
-        }
-
-        #play-again {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        #quit {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div id="game">
-        <h1>Number Finder</h1>
-        <p>Guess a number between 1 and 5:</p>
-        
-        <input type="number" id="guess"><br><br>
-        <button onclick="checkGuess()">Check</button>
-        
-        <p id="result"></p>
-
-        <div id="button-container">
-            <button id="play-again" onclick="playAgain()">Play Again</button>
-            <button id="quit" onclick="quitGame()">Quit</button>
-        </div>
+    <div class="container">
+        <h2>Number Finder</h2>
+        <p>Enter a number between 1 and 5 to make a guess:</p>
+        <div id="output"></div>
+        <button onclick="makeGuess()">Guess</button>
     </div>
-    
+
     <script>
-        var totalTurns = 0;
-        var correctGuesses = 0;
-        var gameActive = true;
-        
-        function checkGuess() {
-            if (!gameActive) return;
+        var score = 0;
+        var turn = 1;
 
-            totalTurns++;
-            
-            var randomNumber = Math.floor(Math.random() * 5) + 1;
-            var userGuess = parseInt(document.getElementById("guess").value);
-            var result = document.getElementById("result");
-            
-            if (userGuess === randomNumber) {
-                correctGuesses++;
+        function makeGuess() {
+            var secretNumber = Math.floor(Math.random() * 5) + 1;
+            var userGuess = parseInt(prompt("Enter a number between 1 and 5:"));
+
+            if (secretNumber === userGuess) {
+                score++;
             }
-            
-            if (totalTurns === 10) {
-                result.innerHTML = "End of 10 turns. Correct guesses: " + correctGuesses;
-                gameActive = false;
+
+            if (turn === 10) {
+                document.getElementById("output").innerHTML = "<p>Your Score: " + score + "/10</p>";
+                var continueGame = confirm("Click 'OK' to continue or 'Cancel' to quit.");
+                if (!continueGame) {
+                    alert("Game over");
+                    return;
+                }
             }
-        }
 
-        function playAgain() {
-            gameActive = true;
-            totalTurns = 0;
-            correctGuesses = 0;
-            document.getElementById("result").innerHTML = "";
-            document.getElementById("guess").value = "";
-        }
-
-        function quitGame() {
-            gameActive = false;
-            document.getElementById("result").innerHTML = "Game has been quit.";
-            window.location.href = "index.html"; // Burada yönlendirme işlemi yapılıyor.
+            turn++;
+            document.getElementById("output").innerHTML = "<p>Turn " + turn + " - Your guess: " + userGuess + ". Score: " + score + "</p>";
         }
     </script>
 </body>
