@@ -3,39 +3,9 @@
 <head>
     <title>Battleship Game</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
-
-        .container {
-            border: 1px solid #ccc;
-            padding: 20px;
-            display: inline-block;
-        }
-
-        button {
-            margin-top: 10px;
-            padding: 5px 10px;
-            font-size: 14px;
-        }
-
-        .cell {
-            width: 40px;
-            height: 40px;
-            border: 1px solid #ccc;
-            display: inline-block;
-            text-align: center;
-            vertical-align: middle;
-            cursor: pointer;
-        }
-
-        .ship-button {
-            margin: 5px;
-            padding: 5px 10px;
-            font-size: 14px;
-            cursor: pointer;
+        /* ... (previous styles) ... */
+        .selected {
+            background-color: yellow;
         }
     </style>
 </head>
@@ -44,12 +14,12 @@
         <h2>Battleship Game</h2>
         <div id="playerBoard"></div>
         <div id="opponentBoard"></div>
-        <button onclick="startGame()">Start Game</button>
-        <button onclick="placeShipsManually()">Place Ships Manually</button>
         <div>
-            <button class="ship-button" onclick="selectShip(1)">Place 1x1 Ship (3 times)</button>
-            <button class="ship-button" onclick="selectShip(2)">Place 2x1 Ship (2 times)</button>
-            <button class="ship-button" onclick="selectShip(3)">Place 3x1 Ship (1 time)</button>
+            <button onclick="selectShip(1)">Select 1-cell Ship</button>
+            <button onclick="selectShip(2)">Select 2-cell Ship</button>
+            <button onclick="selectShip(3)">Select 3-cell Ship</button>
+            <button onclick="startGame()">Start Game</button>
+            <button onclick="placeShipsManually()">Place Ships Manually</button>
         </div>
     </div>
 
@@ -61,28 +31,21 @@
         let selectedShip = 0;
 
         function createBoard(boardId) {
-            let html = '';
-            for (let i = 0; i < boardSize; i++) {
-                boardId[i] = [];
-                html += '<div>';
-                for (let j = 0; j < boardSize; j++) {
-                    boardId[i][j] = 0;
-                    html += '<div class="cell" onclick="cellClick(' + i + ',' + j + ', \'' + boardId + '\')"></div>';
-                }
-                html += '</div>';
-            }
-            document.getElementById(boardId).innerHTML = html;
+            // ... (previous createBoard function) ...
         }
 
         function startGame() {
-            createBoard('playerBoard');
-            createBoard('opponentBoard');
+            // ... (previous startGame function) ...
         }
 
         function cellClick(row, col, boardId) {
             let board;
             if (boardId === 'playerBoard') {
                 board = playerBoard;
+                // Check if a ship is selected and place it on the player board
+                if (selectedShip > 0) {
+                    placeShip(board, row, col, selectedShip);
+                }
             } else if (boardId === 'opponentBoard') {
                 board = opponentBoard;
                 // Prevent opponent board clicks
@@ -119,36 +82,34 @@
         }
 
         function checkWin(board, player) {
-            // Check for a win condition and return true if the player wins
-            // Implement your win condition logic here
-            return false;
+            // ... (previous checkWin function) ...
         }
 
         function selectShip(shipSize) {
             selectedShip = shipSize;
-            alert(`Select ${shipSize} consecutive cells on the board to place the ship.`);
+            alert(`Select ${shipSize}-cell cells on the board to place the ship.`);
         }
 
         function placeShipsManually() {
             alert("Click on the board cells to place your ships.");
 
             let placedShips = 0;
+            let currentShipSize = shipSizes[placedShips];
             document.getElementById('playerBoard').addEventListener('click', function(event) {
                 if (placedShips < shipSizes.length && selectedShip > 0) {
                     let cell = event.target;
                     let row = Math.floor(Array.from(cell.parentNode.children).indexOf(cell) / boardSize);
                     let col = Array.from(cell.parentNode.children).indexOf(cell) % boardSize;
 
-                    if (isValidPlacement(playerBoard, row, col, selectedShip)) {
-                        for (let i = 0; i < selectedShip; i++) {
-                            playerBoard[row][col + i] = 3; // Mark ship position as 3
-                            let shipCell = document.getElementsByClassName('cell')[row * boardSize + col + i];
-                            shipCell.style.backgroundColor = 'green';
-                        }
+                    if (isValidPlacement(playerBoard, row, col, currentShipSize)) {
+                        // Place the ship on the player board
+                        placeShip(playerBoard, row, col, currentShipSize);
+
                         placedShips++;
                         selectedShip = 0;
                         if (placedShips < shipSizes.length) {
-                            alert(`Place ${shipSizes[placedShips]} consecutive cells on the board for the next ship.`);
+                            currentShipSize = shipSizes[placedShips];
+                            alert(`Place ${currentShipSize}-cell cells on the board for the next ship.`);
                         } else {
                             alert("All ships have been placed.");
                             document.getElementById('playerBoard').removeEventListener('click', arguments.callee); // Remove event listener
@@ -161,16 +122,21 @@
         }
 
         function isValidPlacement(board, row, col, shipSize) {
-            // Check if the ship can be placed in the given position
-            for (let i = 0; i < shipSize; i++) {
-                if (col + i >= boardSize || board[row][col + i] !== 0) {
-                    return false;
-                }
-            }
-            return true;
+            // ... (previous isValidPlacement function) ...
         }
 
-        // ... (rest of the JavaScript code) ...
+        function placeShip(board, row, col, shipSize) {
+            for (let i = 0; i < shipSize; i++) {
+                board[row][col + i] = 3; // Mark ship position as 3
+                let shipCell = document.getElementsByClassName('cell')[row * boardSize + col + i];
+                shipCell.style.backgroundColor = 'green';
+                shipCell.classList.remove('selected'); // Remove selected class
+            }
+        }
+
+        function minimax(board, depth, isMaximizing) {
+            // ... (previous minimax function) ...
+        }
     </script>
 </body>
 </html>
