@@ -27,21 +27,23 @@
         
         <p id="result"></p>
         <p id="score"></p>
-        <button id="continueButton" style="display: none;" onclick="continueOrFinish()">Continue (1) or Finish (2)</button>
+        <button id="continueButton" style="display: none;" onclick="continueOrFinish()">Finish</button>
     </div>
     
     <script>
         var maxTries = 10;
         var triesLeft = maxTries;
         var totalScore = 0;
+        var roundsPlayed = 0;
         
         function playGame() {
-            triesLeft = maxTries;
+            roundsPlayed = 0;
             totalScore = 0;
             showGuessingForm();
         }
         
         function showGuessingForm() {
+            triesLeft = maxTries;
             var guessInput = document.getElementById("guess");
             guessInput.removeAttribute("readonly");
             guessInput.value = "";
@@ -57,26 +59,24 @@
             
             if (userGuess === randomNumber) {
                 totalScore += triesLeft;
-                result.innerHTML = "Correct! You earned " + triesLeft + " points. Press Continue (1) or Finish (2).";
+                result.innerHTML = "Correct! You earned " + triesLeft + " points.";
             } else {
                 result.innerHTML = "Wrong! The answer was " + randomNumber + ". Tries left: " + --triesLeft;
             }
             
             if (triesLeft <= 0) {
-                document.getElementById("continueButton").style.display = "block";
-                document.getElementById("guess").setAttribute("readonly", "true");
+                roundsPlayed++;
+                if (roundsPlayed === 10) {
+                    document.getElementById("continueButton").style.display = "block";
+                    document.getElementById("guess").setAttribute("readonly", "true");
+                } else {
+                    showGuessingForm();
+                }
             }
         }
         
         function continueOrFinish() {
-            var choice = parseInt(prompt("Press 1 to continue or 2 to finish."));
-            if (choice === 1) {
-                playGame();
-            } else if (choice === 2) {
-                alert("Game over. Your final score: " + totalScore);
-            } else {
-                alert("Invalid choice. Game over. Your final score: " + totalScore);
-            }
+            alert("Game over. Your final score: " + totalScore);
         }
     </script>
 </body>
