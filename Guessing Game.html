@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Guessing Game</title>
+    <title>Number Finder</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,25 +14,68 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        #play-again {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        #quit {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
     <div id="game">
-        <h1>Guessing Game</h1>
+        <h1>Number Finder</h1>
         <p>Guess a number between 1 and 5:</p>
         
         <input type="number" id="guess"><br><br>
         <button onclick="checkGuess()">Check</button>
         
         <p id="result"></p>
+
+        <div id="button-container">
+            <button id="play-again" onclick="playAgain()">Play Again</button>
+            <button id="quit" onclick="quitGame()">Quit</button>
+        </div>
     </div>
     
     <script>
         var totalTurns = 0;
         var correctGuesses = 0;
+        var gameActive = true;
         
         function checkGuess() {
+            if (!gameActive) return;
+
             totalTurns++;
             
             var randomNumber = Math.floor(Math.random() * 5) + 1;
@@ -41,16 +84,26 @@
             
             if (userGuess === randomNumber) {
                 correctGuesses++;
-                result.innerHTML = "Correct! Press 1 to play again or 2 to quit.";
-            } else {
-                result.innerHTML = "Wrong! The answer was " + randomNumber + ". Press 1 to play again or 2 to quit.";
             }
             
             if (totalTurns === 10) {
-                result.innerHTML += "<br>End of 10 turns. Correct guesses: " + correctGuesses;
-                totalTurns = 0;
-                correctGuesses = 0;
+                result.innerHTML = "End of 10 turns. Correct guesses: " + correctGuesses;
+                gameActive = false;
             }
+        }
+
+        function playAgain() {
+            gameActive = true;
+            totalTurns = 0;
+            correctGuesses = 0;
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("guess").value = "";
+        }
+
+        function quitGame() {
+            gameActive = false;
+            document.getElementById("result").innerHTML = "Game has been quit.";
+            window.location.href = "index.html"; // Burada yönlendirme işlemi yapılıyor.
         }
     </script>
 </body>
