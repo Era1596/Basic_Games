@@ -26,9 +26,11 @@
 <body>
     <div class="container">
         <h2>Number Finder</h2>
-        <p>Enter a number between 1 and 5 to make a guess:</p>
+        <p>Enter a number between 1 and 5:</p>
+        <input type="number" id="guessInput" min="1" max="5">
         <div id="output"></div>
         <button onclick="makeGuess()">Guess</button>
+        <button onclick="endGame()">End Game</button>
     </div>
 
     <script>
@@ -37,23 +39,39 @@
 
         function makeGuess() {
             var secretNumber = Math.floor(Math.random() * 5) + 1;
-            var userGuess = parseInt(prompt("Enter a number between 1 and 5:"));
+            var userGuess = parseInt(document.getElementById("guessInput").value);
+
+            var feedback = document.getElementById("output");
+            var feedbackText = "";
 
             if (secretNumber === userGuess) {
                 score++;
+                feedbackText = "Correct!";
+            } else {
+                feedbackText = "Wrong. The answer was " + secretNumber;
             }
 
             if (turn === 10) {
-                document.getElementById("output").innerHTML = "<p>Your Score: " + score + "/10</p>";
-                var continueGame = confirm("Click 'OK' to continue or 'Cancel' to quit.");
-                if (!continueGame) {
-                    alert("Game over");
-                    return;
-                }
+                feedbackText += "<p>Your Final Score: " + score + "/10</p>";
+                feedbackText += "<button onclick='resetGame()'>Play Again</button>";
             }
 
+            feedback.innerHTML = "<p>Turn " + turn + " - " + feedbackText + " Score: " + score + "</p>";
             turn++;
-            document.getElementById("output").innerHTML = "<p>Turn " + turn + " - Your guess: " + userGuess + ". Score: " + score + "</p>";
+        }
+
+        function endGame() {
+            var feedback = document.getElementById("output");
+            feedback.innerHTML = "<p>Game over. Your Final Score: " + score + "/10</p>";
+            feedback.innerHTML += "<button onclick='resetGame()'>Play Again</button>";
+        }
+
+        function resetGame() {
+            score = 0;
+            turn = 1;
+            var feedback = document.getElementById("output");
+            feedback.innerHTML = "";
+            document.getElementById("guessInput").value = "";
         }
     </script>
 </body>
