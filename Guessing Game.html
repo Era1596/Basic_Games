@@ -26,68 +26,31 @@
         <button onclick="checkGuess()">Check</button>
         
         <p id="result"></p>
-        <button id="continueButton" style="display: none;" onclick="continueOrFinish()">Continue</button>
-        <button id="finishButton" style="display: none;" onclick="finishGame()">Finish</button>
     </div>
     
     <script>
-        var maxTries = 3;
-        var triesLeft = maxTries;
-        var totalScore = 0;
-        var roundsPlayed = 0;
-        var correctAnswer = 0;
+        var totalTurns = 0;
+        var correctGuesses = 0;
         
         function checkGuess() {
-            correctAnswer = Math.floor(Math.random() * 5) + 1;
+            totalTurns++;
+            
+            var randomNumber = Math.floor(Math.random() * 5) + 1;
             var userGuess = parseInt(document.getElementById("guess").value);
             var result = document.getElementById("result");
             
-            if (userGuess === correctAnswer) {
-                totalScore += triesLeft;
-                result.innerHTML = "Correct! You earned " + triesLeft + " points.";
+            if (userGuess === randomNumber) {
+                correctGuesses++;
+                result.innerHTML = "Correct! Press 1 to play again or 2 to quit.";
             } else {
-                result.innerHTML = "Wrong! The answer was " + correctAnswer + ".";
+                result.innerHTML = "Wrong! The answer was " + randomNumber + ". Press 1 to play again or 2 to quit.";
             }
             
-            triesLeft--;
-            
-            if (triesLeft <= 0) {
-                roundsPlayed++;
-                
-                if (roundsPlayed === 10) {
-                    document.getElementById("guess").setAttribute("readonly", "true");
-                    document.getElementById("continueButton").style.display = "block";
-                    document.getElementById("finishButton").style.display = "block";
-                } else {
-                    resetGame();
-                }
+            if (totalTurns === 10) {
+                result.innerHTML += "<br>End of 10 turns. Correct guesses: " + correctGuesses;
+                totalTurns = 0;
+                correctGuesses = 0;
             }
-        }
-        
-        function continueOrFinish() {
-            var userChoice = confirm("Do you want to continue playing?");
-            
-            if (userChoice) {
-                resetGame();
-            } else {
-                finishGame();
-            }
-        }
-
-        function finishGame() {
-            alert("Game over. Your final score: " + totalScore);
-            totalScore = 0;
-            roundsPlayed = 0;
-            resetGame();
-        }
-        
-        function resetGame() {
-            triesLeft = maxTries;
-            document.getElementById("guess").removeAttribute("readonly");
-            document.getElementById("guess").value = "";
-            document.getElementById("result").innerHTML = "";
-            document.getElementById("continueButton").style.display = "none";
-            document.getElementById("finishButton").style.display = "none";
         }
     </script>
 </body>
