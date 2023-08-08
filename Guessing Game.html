@@ -27,6 +27,7 @@
         
         <p id="result"></p>
         <button id="continueButton" style="display: none;" onclick="continueOrFinish()">Continue</button>
+        <button id="finishButton" style="display: none;" onclick="finishGame()">Finish</button>
     </div>
     
     <script>
@@ -56,6 +57,7 @@
                 if (roundsPlayed === 10) {
                     document.getElementById("guess").setAttribute("readonly", "true");
                     document.getElementById("continueButton").style.display = "block";
+                    document.getElementById("finishButton").style.display = "block";
                 } else {
                     resetGame();
                 }
@@ -68,12 +70,15 @@
             if (userChoice) {
                 resetGame();
             } else {
-                alert("Game over. Your final score: " + totalScore);
-                window.location.href = "index.html";
-                totalScore = 0;
-                roundsPlayed = 0;
-                resetGame();
+                finishGame();
             }
+        }
+
+        function finishGame() {
+            alert("Game over. Your final score: " + totalScore);
+            totalScore = 0;
+            roundsPlayed = 0;
+            resetGame();
         }
         
         function resetGame() {
@@ -82,6 +87,7 @@
             document.getElementById("guess").value = "";
             document.getElementById("result").innerHTML = "";
             document.getElementById("continueButton").style.display = "none";
+            document.getElementById("finishButton").style.display = "none";
         }
     </script>
 </body>
