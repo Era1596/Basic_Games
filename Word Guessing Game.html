@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Word Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            display: inline-block;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Word Guessing Game</h2>
+        <p>Press 'Play' to start or 'Exit' to leave.</p>
+        <button onclick="playGame()">Play</button>
+        <button onclick="exitGame()">Exit</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        var library = ["apple", "banana", "cherry", "grape", "lemon", "orange", "peach", "pear", "pineapple", "strawberry"];
+
+        function playGame() {
+            var selectedWord = library[Math.floor(Math.random() * library.length)];
+            var shuffledWord = selectedWord.split('').sort(function(){return 0.5-Math.random()}).join('');
+            var remainingAttempts = 3;
+            var output = document.getElementById("output");
+            output.innerHTML = "<p>Welcome to the Word Guessing Game!<br>Can you guess the shuffled word? You have 3 attempts.</p>";
+
+            while (remainingAttempts > 0) {
+                var guess = prompt("Shuffled word: " + shuffledWord + "\nYour guess:");
+                guess = guess.toLowerCase();
+                
+                if (guess === selectedWord) {
+                    output.innerHTML += "<p>Congratulations! You guessed the word correctly.</p>";
+                    break;
+                } else {
+                    remainingAttempts--;
+                    if (remainingAttempts > 0) {
+                        output.innerHTML += "<p>Wrong guess! You have " + remainingAttempts + " attempts remaining.</p>";
+                    } else {
+                        output.innerHTML += "<p>Sorry, you're out of attempts. The correct word was '" + selectedWord + "'.</p>";
+                    }
+                }
+            }
+
+            var playAgain = confirm("Do you want to play again?");
+            if (playAgain) {
+                playGame();
+            } else {
+                output.innerHTML += "<p>Thank you for playing!</p>";
+            }
+        }
+
+        function exitGame() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
