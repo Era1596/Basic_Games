@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Word Finder</title>
+    <title>Word Guessing Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,11 +24,11 @@
 </head>
 <body>
     <div class="container">
-        <h2>Word Finder</h2>
-        <p>Press 'Play' to start or 'Exit' to leave.</p>
+        <h2>Word Guessing Game</h2>
+        <div id="output"></div>
+        <input type="text" id="guessInput" placeholder="Enter your guess">
         <button onclick="playGame()">Play</button>
         <button onclick="exitGame()">Exit</button>
-        <div id="output"></div>
     </div>
 
     <script>
@@ -39,11 +39,12 @@
             var shuffledWord = selectedWord.split('').sort(function(){return 0.5-Math.random()}).join('');
             var remainingAttempts = 3;
             var output = document.getElementById("output");
+            var guessInput = document.getElementById("guessInput");
             output.innerHTML = "<p>Welcome to the Word Guessing Game!<br>Can you guess the shuffled word? You have 3 attempts.</p>";
+            guessInput.style.display = "block";
 
             while (remainingAttempts > 0) {
-                var guess = prompt("Shuffled word: " + shuffledWord + "\nYour guess:");
-                guess = guess.toLowerCase();
+                var guess = guessInput.value.toLowerCase();
                 
                 if (guess === selectedWord) {
                     output.innerHTML += "<p>Congratulations! You guessed the word correctly.</p>";
@@ -58,6 +59,7 @@
                 }
             }
 
+            guessInput.style.display = "none";
             var playAgain = confirm("Do you want to play again?");
             if (playAgain) {
                 playGame();
