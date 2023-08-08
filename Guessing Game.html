@@ -57,7 +57,9 @@
         function endGame() {
             var feedback = document.getElementById("output");
             feedback.innerHTML = "<p>Game over. Your Final Score: " + score + "/" + (turn - 1) + "</p>";
-            feedback.innerHTML += "<button onclick='window.location.href=\"index.html\"'>Back to Home</button>";
+            setTimeout(function() {
+                window.location.href = "index.html";
+            }, 3000);
             document.getElementById("guessInput").disabled = true;
         }
     </script>
