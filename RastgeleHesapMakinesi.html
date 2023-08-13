@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+</head>
+<body>
+    <h2>Welcome to the Random Operation Machine</h2>
+    <label for="firstNumber">Enter the 1st Number:</label>
+    <input type="number" id="firstNumber" /><br />
+    <label for="secondNumber">Enter the 2nd Number:</label>
+    <input type="number" id="secondNumber" /><br />
+    <button onclick="calculate()">Calculate</button>
+    <p id="result"></p>
+
+    <script>
+        function calculate() {
+            const a = parseInt(document.getElementById("firstNumber").value);
+            const b = parseInt(document.getElementById("secondNumber").value);
+            const deger = Math.floor(Math.random() * 5) + 1;
+
+            let resultText = "";
+            switch (deger) {
+                case 1:
+                    resultText = `Sum of ${a} and ${b} is: ${a + b}`;
+                    break;
+                case 2:
+                    resultText = `Difference between ${b} and ${a} is: ${b - a}`;
+                    break;
+                case 3:
+                    resultText = `Product of ${a} and ${b} is: ${a * b}`;
+                    break;
+                case 4:
+                    resultText = `Sum of ${a} and ${b} is squared: ${(a + b) ** 2}`;
+                    break;
+                case 5:
+                    resultText = `Difference between ${b} and ${a} is squared: ${(b - a) ** 2}`;
+                    break;
+                default:
+                    resultText = "Invalid input. Please try again.";
+                    break;
+            }
+
+            document.getElementById("result").innerText = resultText;
+        }
+    </script>
+</body>
+</html>
