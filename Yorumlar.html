@@ -27,35 +27,49 @@
     
     <textarea id="commentBox" placeholder="Enter your comment"></textarea>
     <button onclick="submitComment()">Submit Comment</button>
+    <button onclick="resetComments()">Delete All Comments</button>
 
     <ul id="commentList"></ul>
 
     <script>
         let comments = [];
 
-        function submitComment() {
+        async function submitComment() {
             const comment = document.getElementById("commentBox").value;
             if (comment === "delete_all_comments") {
-                localStorage.removeItem("comments");
+                await fetch("comments.json", { method: "DELETE" });
                 comments = [];
             } else {
                 comments.push(comment);
-                localStorage.setItem("comments", JSON.stringify(comments));
+                await fetch("comments.json", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(comments)
+                });
             }
             updateCommentList();
             document.getElementById("commentBox").value = ""; // Yorum kutusunu temizle
         }
 
-        window.onload = function () {
-            const storedComments = JSON.parse(localStorage.getItem("comments")) || [];
-            comments = storedComments;
+        async function resetComments() {
+            await fetch("comments.json", { method: "DELETE" });
+            comments = [];
             updateCommentList();
-        };
+        }
 
-        function updateCommentList() {
+        async function updateCommentList() {
             const commentList = document.getElementById("commentList");
+            const response = await fetch("comments.json");
+            const data = await response.json();
+            comments = data;
             commentList.innerHTML = comments.map(comment => `<li>${comment}</li>`).join("");
         }
+
+        window.onload = function () {
+            updateCommentList();
+        };
     </script>
 </body>
 </html>
