@@ -9,9 +9,21 @@
             top: 0;
             left: 0;
         }
+
+        .exit-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <button class="exit-button" onclick="exit()">Exit</button>
     <script>
         document.body.style.backgroundColor = "black";
 
@@ -48,6 +60,10 @@
             const y = event.clientY;
             yildizcik(x, y);
         });
+
+        function exit() {
+            window.location.href = "index.html";
+        }
     </script>
 </body>
 </html>
