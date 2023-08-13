@@ -17,9 +17,19 @@
         }
 
         #commentList li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 5px;
             border: 1px solid #ccc;
             padding: 5px;
+        }
+        
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -29,6 +39,7 @@
     <textarea id="commentBox" placeholder="Enter your comment"></textarea>
     <button onclick="submitComment()">Submit Comment</button>
     <button onclick="resetComments()">Reset Comments</button>
+    <button onclick="deleteAllComments()">Delete All Comments</button>
 
     <ul id="commentList"></ul>
 
@@ -48,6 +59,14 @@
             updateCommentList();
         }
 
+        function deleteAllComments() {
+            if (prompt("Type 'delete_all_comments' to confirm deletion") === "delete_all_comments") {
+                localStorage.removeItem("comments");
+                comments = [];
+                updateCommentList();
+            }
+        }
+
         window.onload = function () {
             const storedComments = JSON.parse(localStorage.getItem("comments")) || [];
             comments = storedComments;
@@ -56,7 +75,18 @@
 
         function updateCommentList() {
             const commentList = document.getElementById("commentList");
-            commentList.innerHTML = comments.map(comment => `<li>${comment}</li>`).join("");
+            commentList.innerHTML = comments.map((comment, index) => `
+                <li>
+                    <span>${comment}</span>
+                    <button class="delete-button" onclick="deleteComment(${index})">Delete</button>
+                </li>
+            `).join("");
+        }
+
+        function deleteComment(index) {
+            comments.splice(index, 1);
+            localStorage.setItem("comments", JSON.stringify(comments));
+            updateCommentList();
         }
     </script>
 </body>
