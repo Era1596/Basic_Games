@@ -28,10 +28,27 @@
 
             let resultText = "";
             switch (deger) {
-                // ... (switch cases for different operations) ...
+                case 1:
+                    resultText = `Sum of ${a} and ${b} is: ${a + b}`;
+                    break;
+                case 2:
+                    resultText = `Difference between ${b} and ${a} is: ${b - a}`;
+                    break;
+                case 3:
+                    resultText = `Product of ${a} and ${b} is: ${a * b}`;
+                    break;
+                case 4:
+                    resultText = `Sum of ${a} and ${b} is squared: ${(a + b) ** 2}`;
+                    break;
+                case 5:
+                    resultText = `Difference between ${b} and ${a} is squared: ${(b - a) ** 2}`;
+                    break;
+                default:
+                    resultText = "Invalid input. Please try again.";
+                    break;
             }
 
-            document.getElementById("result").textContent = resultText; // Corrected line
+            document.getElementById("result").textContent = resultText;
         }
 
         function exit() {
