@@ -43,6 +43,7 @@
                 localStorage.setItem("comments", JSON.stringify(comments));
             }
             updateCommentList();
+            document.getElementById("commentBox").value = ""; // Yorum kutusunu temizle
         }
 
         window.onload = function () {
