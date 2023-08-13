@@ -3,69 +3,61 @@
 <head>
     <title>Comments</title>
     <style>
-        button {
+        /* ... (previous styles) ... */
+        #commentBox {
             margin-top: 10px;
-            padding: 5px 10px;
-            font-size: 14px;
+            width: 300px;
+            height: 100px;
         }
 
-        /* Add this style for the result paragraph */
-        #result {
-            font-size: 18px;
+        #commentList {
             margin-top: 20px;
+            list-style: none;
+            padding: 0;
+        }
+
+        #commentList li {
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            padding: 5px;
         }
     </style>
 </head>
 <body>
-    <h2>Welcome to the Random Operation Machine</h2>
-    <label for="firstNumber">Enter the 1st Number:</label>
-    <input type="number" id="firstNumber" /><br />
-    <label for="secondNumber">Enter the 2nd Number:</label>
-    <input type="number" id="secondNumber" /><br />
-    <button onclick="calculate()">Calculate</button>
-    <button onclick="exit()">Exit</button>
-    <!-- Add a <p> element to display the result -->
-    <p id="result"></p>
-
-    <!-- Add a text box and button for submitting comments -->
+    <h2>Comments</h2>
+    
     <textarea id="commentBox" placeholder="Enter your comment"></textarea>
     <button onclick="submitComment()">Submit Comment</button>
-
-    <button onclick="window.location.href='comments.html'">View Comments</button>
+    <button onclick="resetComments()">Reset Comments</button>
 
     <ul id="commentList"></ul>
 
     <script>
-        function calculate() {
-            // ... (previous calculate function) ...
-        }
-
-        function exit() {
-            window.location.href = "index.html";
-        }
-
-        // Yorumları tutmak için bir dizi oluşturun
         let comments = [];
 
-        // Yorum eklemek için bir fonksiyon oluşturun
         function submitComment() {
             const comment = document.getElementById("commentBox").value;
             comments.push(comment);
-            // Yorumları localStorage'a kaydet
             localStorage.setItem("comments", JSON.stringify(comments));
-            alert("Comment submitted: " + comment);
+            updateCommentList();
         }
 
-        // Sayfa yüklendiğinde yorumları yükle
+        function resetComments() {
+            localStorage.removeItem("comments");
+            comments = [];
+            updateCommentList();
+        }
+
         window.onload = function () {
-            // localStorage'dan yorumları al
             const storedComments = JSON.parse(localStorage.getItem("comments")) || [];
             comments = storedComments;
+            updateCommentList();
+        };
 
-            // Yorumları listele
+        function updateCommentList() {
             const commentList = document.getElementById("commentList");
             commentList.innerHTML = comments.map(comment => `<li>${comment}</li>`).join("");
-        };
+        }
     </script>
 </body>
 </html>
