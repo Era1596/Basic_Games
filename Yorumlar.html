@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comments</title>
+    <style>
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        /* Add this style for the result paragraph */
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome to the Random Operation Machine</h2>
+    <label for="firstNumber">Enter the 1st Number:</label>
+    <input type="number" id="firstNumber" /><br />
+    <label for="secondNumber">Enter the 2nd Number:</label>
+    <input type="number" id="secondNumber" /><br />
+    <button onclick="calculate()">Calculate</button>
+    <button onclick="exit()">Exit</button>
+    <!-- Add a <p> element to display the result -->
+    <p id="result"></p>
+
+    <!-- Add a text box and button for submitting comments -->
+    <textarea id="commentBox" placeholder="Enter your comment"></textarea>
+    <button onclick="submitComment()">Submit Comment</button>
+
+    <button onclick="window.location.href='comments.html'">View Comments</button>
+
+    <ul id="commentList"></ul>
+
+    <script>
+        function calculate() {
+            // ... (previous calculate function) ...
+        }
+
+        function exit() {
+            window.location.href = "index.html";
+        }
+
+        // Yorumları tutmak için bir dizi oluşturun
+        let comments = [];
+
+        // Yorum eklemek için bir fonksiyon oluşturun
+        function submitComment() {
+            const comment = document.getElementById("commentBox").value;
+            comments.push(comment);
+            // Yorumları localStorage'a kaydet
+            localStorage.setItem("comments", JSON.stringify(comments));
+            alert("Comment submitted: " + comment);
+        }
+
+        // Sayfa yüklendiğinde yorumları yükle
+        window.onload = function () {
+            // localStorage'dan yorumları al
+            const storedComments = JSON.parse(localStorage.getItem("comments")) || [];
+            comments = storedComments;
+
+            // Yorumları listele
+            const commentList = document.getElementById("commentList");
+            commentList.innerHTML = comments.map(comment => `<li>${comment}</li>`).join("");
+        };
+    </script>
+</body>
+</html>
