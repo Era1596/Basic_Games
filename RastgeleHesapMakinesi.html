@@ -2,6 +2,13 @@
 <html>
 <head>
     <title>Random Calculator</title>
+    <style>
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <h2>Welcome to the Random Operation Machine</h2>
@@ -13,17 +20,18 @@
     <button onclick="exit()">Exit</button>
     <p id="result"></p>
 
-    <style>
-        button {
-            margin-top: 10px;
-            padding: 5px 10px;
-            font-size: 14px;
-        }
-    </style>
-
     <script>
         function calculate() {
-            // ... (previous calculate function) ...
+            const a = parseInt(document.getElementById("firstNumber").value);
+            const b = parseInt(document.getElementById("secondNumber").value);
+            const deger = Math.floor(Math.random() * 5) + 1;
+
+            let resultText = "";
+            switch (deger) {
+                // ... (switch cases for different operations) ...
+            }
+
+            document.getElementById("result").textContent = resultText; // Corrected line
         }
 
         function exit() {
