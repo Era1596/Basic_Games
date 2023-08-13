@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Star Drawing</title>
+    <style>
+        /* ... (previous styles) ... */
+        .canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.body.style.backgroundColor = "black";
+
+        const canvas = document.createElement("canvas");
+        canvas.classList.add("canvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext("2d");
+        ctx.strokeStyle = "white";
+
+        function yildizcik(x, y) {
+            const yildizboyut = Math.floor(Math.random() * 9) + 2;
+            ctx.beginPath();
+            ctx.moveTo(x, y - yildizboyut);
+            for (let i = 0; i < 5; i++) {
+                ctx.lineTo(
+                    Math.cos((18 + i * 72) / 180 * Math.PI) * yildizboyut + x,
+                    -Math.sin((18 + i * 72) / 180 * Math.PI) * yildizboyut + y
+                );
+                ctx.lineTo(
+                    Math.cos((54 + i * 72) / 180 * Math.PI) * (yildizboyut / 2) + x,
+                    -Math.sin((54 + i * 72) / 180 * Math.PI) * (yildizboyut / 2) + y
+                );
+            }
+            ctx.closePath();
+            ctx.fillStyle = "white";
+            ctx.fill();
+        }
+
+        canvas.addEventListener("click", (event) => {
+            const x = event.clientX;
+            const y = event.clientY;
+            yildizcik(x, y);
+        });
+    </script>
+</body>
+</html>
