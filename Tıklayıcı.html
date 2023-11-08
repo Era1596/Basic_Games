@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tıklama Sayacı</title>
+</head>
+<body>
+    <p>Kaç kere tıklandı: <span id="tiklamaSayisi">0</span></p>
+
+    <script>
+        let tiklamaSayisi = 0;
+        const tiklamaSayisiGoster = document.getElementById("tiklamaSayisi");
+
+        document.body.addEventListener("click", function() {
+            tiklamaSayisi++;
+            tiklamaSayisiGoster.textContent = tiklamaSayisi;
+        });
+    </script>
+</body>
+</html>
