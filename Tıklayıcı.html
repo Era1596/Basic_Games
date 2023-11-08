@@ -10,10 +10,13 @@
         let tiklamaSayisi = 0;
         const tiklamaSayisiGoster = document.getElementById("tiklamaSayisi");
 
-        document.body.addEventListener("click", function() {
+        function artirTiklamaSayisi() {
             tiklamaSayisi++;
             tiklamaSayisiGoster.textContent = tiklamaSayisi;
-        });
+        }
+
+        document.body.addEventListener("click", artirTiklamaSayisi);
+        document.body.addEventListener("touchstart", artirTiklamaSayisi);
     </script>
 </body>
 </html>
