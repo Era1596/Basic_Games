@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click Counter</title>
+    <title>Tıklama Sayacı</title>
     <style>
         body {
             display: flex;
@@ -13,52 +13,63 @@
             margin: 0;
         }
 
-        button {
-            font-size: 20px;
+        #counter {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #clickButton {
+            font-size: 18px;
             padding: 10px 20px;
-            margin: 10px;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<button id="clickButton" onclick="countClicks()">Click Me</button>
-<p>Click Count: <span id="clickCount">0</span></p>
-<p>Click Speed: <span id="clickSpeed">0</span> clicks per second</p>
-<button onclick="resetClicks()">Reset</button>
-<button onclick="goBack()">Go Back</button>
+<div>
+    <p id="counter">Tıklama Sayısı: 0<br>Tıklama Hızı: 0 tıklama/s</p>
+    <button id="clickButton">Tıkla</button>
+    <button onclick="resetCounter()">Sıfırla</button>
+    <button onclick="goBack()">Go Back</button>
+</div>
 
 <script>
     var clickCount = 0;
-    var startTime = new Date().getTime();
+    var startTime;
+    var endTime;
 
-    function countClicks() {
+    function clickHandler() {
         clickCount++;
-        updateClickCount();
+        updateCounter();
     }
 
-    function updateClickCount() {
-        var currentTime = new Date().getTime();
-        var elapsedTime = (currentTime - startTime) / 1000; // seconds
-
-        var clickSpeed = clickCount / elapsedTime;
-
-        document.getElementById("clickCount").innerText = clickCount;
-        document.getElementById("clickSpeed").innerText = clickSpeed.toFixed(2);
-
-        startTime = currentTime;
-    }
-
-    function resetClicks() {
+    function resetCounter() {
         clickCount = 0;
-        startTime = new Date().getTime();
-        updateClickCount();
+        startTime = null;
+        endTime = null;
+        updateCounter();
     }
 
     function goBack() {
         window.location.href = "index.html";
     }
+
+    function updateCounter() {
+        var counterElement = document.getElementById("counter");
+        var clickButton = document.getElementById("clickButton");
+
+        if (!startTime) {
+            startTime = new Date();
+        } else {
+            endTime = new Date();
+            var timeDiff = endTime - startTime;
+            var clickRate = clickCount / (timeDiff / 1000); // tıklama hızı saniye başına
+            counterElement.innerHTML = "Tıklama Sayısı: " + clickCount + "<br>Tıklama Hızı: " + clickRate.toFixed(2) + " tıklama/s";
+        }
+    }
+
+    document.getElementById("clickButton").addEventListener("click", clickHandler);
 </script>
 
 </body>
