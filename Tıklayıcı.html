@@ -7,41 +7,59 @@
     <style>
         body {
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             margin: 0;
         }
 
-        #clickButton {
-            padding: 20px;
-            font-size: 18px;
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <button id="clickButton" onclick="countClicks()">Click Me!</button>
-    <div id="clickInfo">Click Count: 0<br>Click Speed: 0 clicks/second</div>
+<button id="clickButton" onclick="countClicks()">Click Me</button>
+<p>Click Count: <span id="clickCount">0</span></p>
+<p>Click Speed: <span id="clickSpeed">0</span> clicks per second</p>
+<button onclick="resetClicks()">Reset</button>
+<button onclick="goBack()">Go Back</button>
 
-    <script>
-        var clickCount = 0;
-        var startTime;
+<script>
+    var clickCount = 0;
+    var startTime = new Date().getTime();
 
-        function countClicks() {
-            clickCount++;
+    function countClicks() {
+        clickCount++;
+        updateClickCount();
+    }
 
-            if (!startTime) {
-                startTime = new Date().getTime();
-            } else {
-                var currentTime = new Date().getTime();
-                var elapsedTime = (currentTime - startTime) / 1000; // convert to seconds
-                var clickSpeed = clickCount / elapsedTime;
-                document.getElementById("clickInfo").innerHTML = "Click Count: " + clickCount + "<br>Click Speed: " + clickSpeed.toFixed(2) + " clicks/second";
-            }
-        }
-    </script>
+    function updateClickCount() {
+        var currentTime = new Date().getTime();
+        var elapsedTime = (currentTime - startTime) / 1000; // seconds
+
+        var clickSpeed = clickCount / elapsedTime;
+
+        document.getElementById("clickCount").innerText = clickCount;
+        document.getElementById("clickSpeed").innerText = clickSpeed.toFixed(2);
+
+        startTime = currentTime;
+    }
+
+    function resetClicks() {
+        clickCount = 0;
+        startTime = new Date().getTime();
+        updateClickCount();
+    }
+
+    function goBack() {
+        window.location.href = "index.html";
+    }
+</script>
 
 </body>
 </html>
