@@ -1,22 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Tıklama Sayacı</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Counter</title>
 </head>
 <body>
-    <p>Kaç kere tıklandı: <span id="tiklamaSayisi">0</span></p>
+
+    <h1>Click Counter</h1>
+
+    <button id="clickButton">Click me!</button>
+    <p>Click count: <span id="clickCount">0</span></p>
 
     <script>
-        let tiklamaSayisi = 0;
-        const tiklamaSayisiGoster = document.getElementById("tiklamaSayisi");
+        // JavaScript kodu
+        var clickCount = 0; // Tıklama sayısını tutan değişken
 
-        function artirTiklamaSayisi() {
-            tiklamaSayisi++;
-            tiklamaSayisiGoster.textContent = tiklamaSayisi;
+        // Düğmeye tıklandığında çağrılacak fonksiyon
+        function incrementClickCount() {
+            clickCount++; // Tıklama sayısını arttır
+            document.getElementById('clickCount').innerText = clickCount; // Sayıyı ekranda güncelle
         }
 
-        document.body.addEventListener("click", artirTiklamaSayisi);
-        document.body.addEventListener("touchstart", artirTiklamaSayisi);
+        // Düğmeye tıklama olayını dinle
+        document.getElementById('clickButton').addEventListener('click', incrementClickCount);
     </script>
+
 </body>
 </html>
