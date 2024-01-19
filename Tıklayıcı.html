@@ -2,29 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click Counter</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #clickButton {
+            padding: 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Click Counter</h1>
-
-    <button id="clickButton">Click me!</button>
-    <p>Click count: <span id="clickCount">0</span></p>
+    <button id="clickButton" onclick="countClicks()">Click Me!</button>
+    <div id="clickInfo">Click Count: 0<br>Click Speed: 0 clicks/second</div>
 
     <script>
-        // JavaScript kodu
-        var clickCount = 0; // Tıklama sayısını tutan değişken
+        var clickCount = 0;
+        var startTime;
 
-        // Düğmeye tıklandığında çağrılacak fonksiyon
-        function incrementClickCount() {
-            clickCount++; // Tıklama sayısını arttır
-            document.getElementById('clickCount').innerText = clickCount; // Sayıyı ekranda güncelle
+        function countClicks() {
+            clickCount++;
+
+            if (!startTime) {
+                startTime = new Date().getTime();
+            } else {
+                var currentTime = new Date().getTime();
+                var elapsedTime = (currentTime - startTime) / 1000; // convert to seconds
+                var clickSpeed = clickCount / elapsedTime;
+                document.getElementById("clickInfo").innerHTML = "Click Count: " + clickCount + "<br>Click Speed: " + clickSpeed.toFixed(2) + " clicks/second";
+            }
         }
-
-        // Düğmeye tıklama olayını dinle
-        document.getElementById('clickButton').addEventListener('click', incrementClickCount);
     </script>
 
 </body>
