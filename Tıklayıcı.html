@@ -29,8 +29,8 @@
 
 <div>
     <p id="counter">Tıklama Sayısı: 0<br>Tıklama Hızı: 0 tıklama/s</p>
-    <button id="clickButton">Tıkla</button>
-    <button onclick="resetCounter()">Sıfırla</button>
+    <button id="clickButton">Click</button>
+    <button onclick="resetCounter()">Reset</button>
     <button onclick="goBack()">Go Back</button>
 </div>
 
@@ -65,7 +65,7 @@
             endTime = new Date();
             var timeDiff = endTime - startTime;
             var clickRate = clickCount / (timeDiff / 1000); // tıklama hızı saniye başına
-            counterElement.innerHTML = "Tıklama Sayısı: " + clickCount + "<br>Tıklama Hızı: " + clickRate.toFixed(2) + " tıklama/s";
+            counterElement.innerHTML = "Click Counter: " + clickCount + "<br>Click Speed: " + clickRate.toFixed(2) + " clicks/second";
         }
     }
 
